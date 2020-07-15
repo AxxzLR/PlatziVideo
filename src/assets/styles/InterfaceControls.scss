@@ -1,0 +1,45 @@
+/* Interface controls */
+.inputText_1 {
+    border          : 2px solid white;
+    text-align      : center;
+    width           : 100%;
+    /* max-width    : 800px; */
+    border-radius   : 25px;
+    font-size       : 16px;
+    padding         : 5px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.inputText_1::placeholder,
+.inputText_2::placeholder {
+    color: white;
+}
+
+.inputText_2 {
+    border          : none;
+    background-color: rgba(255, 255, 255, 0);
+    border-bottom   : 2px solid white;
+    width           : 100%;
+    padding         : 5px 10px;
+    font-size       : 14px;
+    margin          : 10px 0px;
+}
+
+.inputButton_1 {
+    width           : 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    border          : none;
+    font-size       : 20px;
+    padding         : 10px;
+    border-radius   : 20px;
+    transition      : 450ms;
+    margin          : 20px 0px;
+    cursor          : pointer;
+}
+
+.inputButton_1:hover {
+    background-color  : rgba(255, 255, 255, 0.6);
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(255, 255, 255, 0.8);
+    -moz-box-shadow   : 0px 0px 5px 0px rgba(255, 255, 255, 0.8);
+    box-shadow        : 0px 0px 5px 0px rgba(255, 255, 255, 0.8);
+}

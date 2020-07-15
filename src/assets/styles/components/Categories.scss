@@ -1,0 +1,13 @@
+.carrusel__categories {
+    width     : 100%;
+    transition: 450ms;
+    padding   : 0px 20px;
+    /* position  : absolute; */
+}
+
+/* Responsive */
+@media only screen and (max-width: 600px) {
+    .carrusel__categories {
+        text-align: center;
+    }
+}

@@ -1,0 +1,13 @@
+.carrusel {
+    width     : 100%;
+    overflow-x: scroll;
+    padding   : 10px;
+    position  : relative;
+    margin-bottom: 30px;
+}
+
+.carrusel__container {
+    white-space   : nowrap;
+    margin        : 70px 0px;
+    padding-bottom: 10px;
+}
