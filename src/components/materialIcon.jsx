@@ -1,9 +1,9 @@
 import React from 'react'
 
-const MaterialIcon = ({nameIcon, classAdd=''}) => {
+const MaterialIcon = ({nameIcon, classAdd='', handleClick}) => {
     const classPersonalized = `material-icons ${classAdd}`
     return (
-    <span className={classPersonalized}>{nameIcon}</span>
+    <span onClick={handleClick} className={classPersonalized}>{nameIcon}</span>
     )
 }
 

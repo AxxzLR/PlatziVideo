@@ -54,4 +54,7 @@ module.exports = {
             filename: 'assets/[name].css',
         })
     ],
+    devServer: {
+        historyApiFallback: true,
+    },
 };
