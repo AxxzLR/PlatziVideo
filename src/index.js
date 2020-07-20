@@ -1,15 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, compose } from 'redux'
 import reducer from './reducers'
+
+import { loadState, saveState } from './utils/statePersist'
 
 import App from './routes/App'
 
+//Apoya al la extencion de chrome a mostrar la informacion.
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
 //Importar la data para el store de Redux
-const initialState = {
+const initialState = loadState() || {
     "user": {},
     "playing": {},
+    "search": { searchParam: '', searchResults: [] },
     "myList": [],
     "trends": [
         {
@@ -173,7 +179,11 @@ const initialState = {
     ]
 }
 
-const store = createStore(reducer, initialState)
+const store = createStore(reducer, initialState, composeEnhancers())
+
+store.subscribe(function () {
+    saveState(store.getState())
+})
 
 //Al usar Redux se debe encapsular la aplicacion en un provider
 // El <Provider /> hace que la store de Redux esté disponible para cualquier componente anidado que se haya incluido en la función connect().

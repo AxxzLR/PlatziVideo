@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { loginRequest } from '../actions'
+import PropTypes from 'prop-types'
 import iconGoogle from '../assets/static/icon-google.png'
 import iconTwitter from '../assets/static/icon-twitter.png'
 import '../assets/styles/components/Login.scss'
@@ -11,6 +12,7 @@ import { Link } from 'react-router-dom'
 const Login = props => {
     const [form, setValues] = useState({
         email: '',
+        password: '',
     })
 
     const handleInput = event => {
@@ -45,7 +47,7 @@ const Login = props => {
                             type="password"
                             className="inputText_2"
                             placeholder="Contraseña"
-                            name="Contraseña"
+                            name="password"
                             id="txtContraseña"
                             onChange={handleInput}
                         />
@@ -81,6 +83,11 @@ const Login = props => {
         </React.Fragment>
     )
 }
+
+Login.propTypes = {
+    props: PropTypes.object
+}
+
 
 const mapDispatchToProps = {
     loginRequest,

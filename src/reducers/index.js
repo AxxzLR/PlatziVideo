@@ -16,7 +16,46 @@ const reducer = (state, action) => {
         case actionTypes.LOGIN_REQUEST:
             return {
                 ...state,
-                user:action.payload
+                user: action.payload
+            }
+        case actionTypes.LOGOUT_REQUEST:
+            return {
+                ...state,
+                user: action.payload
+            }
+        case actionTypes.REGISTER_REQUEST:
+            return {
+                ...state,
+                user: action.payload
+            }
+        case actionTypes.GET_VIDEO_SOURCE:
+            return {
+                ...state,
+                playing: state.trends.find(item => item.id === Number(action.payload))
+                    || state.originals.find(item => item.id === Number(action.payload))
+                    || []
+            }
+        case actionTypes.CLEAN_VIDEO_SOURCE:
+            return {
+                ...state,
+                playing: []
+            }
+        case actionTypes.SET_SEARCH:
+            if (action.payload.length > 0) {
+                const trendsFilter = state.trends.
+                    filter(item => item.title.toLowerCase().includes(action.payload)
+                        || item.description.toLowerCase().includes(action.payload))
+                const originalsFilter = state.originals.
+                    filter(item => item.title.toLowerCase().includes(action.payload)
+                        || item.description.toLowerCase().includes(action.payload))
+                return {
+                    ...state,
+                    search: { searchParam: action.payload, searchResults: [...trendsFilter, ...originalsFilter] }
+                }
+            }
+            return {
+                ...state,
+                search: { searchParam: '', searchResults: [] }
             }
         default:
             return state

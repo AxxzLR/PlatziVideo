@@ -4,6 +4,7 @@ import { setFavorite, deleteFavorite } from '../actions'
 import '../assets/styles/components/CarouselItem.scss'
 import MaterialIcon from './materialIcon'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 const CarouselItem = (props) => {
     const { id, cover, title, year, contentRating, duration, isFavorite } = props
@@ -22,10 +23,12 @@ const CarouselItem = (props) => {
                 alt={title} />
             <div className="carrusel-item__details">
                 <div>
-                    <MaterialIcon
-                        classAdd="carrusel-item__details--icon"
-                        nameIcon="play_circle_filled"
-                    />
+                    <Link to={`/player/${id}`}>
+                        <MaterialIcon
+                            classAdd="carrusel-item__details--icon"
+                            nameIcon="play_circle_filled"
+                        />
+                    </Link>
                     {!isFavorite ?
                         <MaterialIcon
                             classAdd="carrusel-item__details--icon"

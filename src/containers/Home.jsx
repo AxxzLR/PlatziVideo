@@ -1,57 +1,63 @@
 import React, { useState, useEffect } from 'react'
-import { connectct, connect } from 'react-redux'
+import { connect } from 'react-redux'
 import Search from '../components/Search'
-import Categories from '../components/Categories'
-import Carousel from '../components/Carousel'
-import CarouselItem from '../components/Carousel-item'
-import useInitialState from '../Hooks/useInitialState'
+// import useInitialState from '../Hooks/useInitialState'
 import '../assets/styles/App.scss' //Requirio la extensión
+import CarouselSection from '../components/CarouselSection'
+import { setSearch, cleanVideoSource } from '../actions'
+import SearchNoResults from '../components/SearchNoResults'
 
 // Se remueve el llamado a la api ya que lo realizara Redux
 // const API = 'http://localhost:3000/initalState'
 
-const Home = ({ user, myList, trends, originals }) => {
+const Home = props => {
     // const initialState = useInitialState(API)
-    console.log(user)
+    const { myList, trends, originals, search } = props
+    const [searchValues, setSearching] = useState({
+        isSearching: search.searchParam.length > 0,
+        searchParam: search.searchParam
+    })
+
+    useEffect(()=>{
+        props.cleanVideoSource({})
+    })
+
+    const handleSearch = event => {
+        const searchParam = event.target.value.trim().toLowerCase()
+        const isSearching = searchParam.length > 0
+        setSearching({ isSearching, searchParam })
+
+        props.setSearch(searchParam)
+    }
     return (
         <>
-            <Search />
-            {
-                myList?.length > 0 &&
-                <Categories title="Mi lista">
-                    <Carousel>
-                        {
-                            myList?.map(item =>
-                                <CarouselItem key={item.id} {...item} isFavorite={true} />
-                            )
-                        }
-                    </Carousel>
-                </Categories>
-            }
-            {
-                trends?.length > 0 &&
-                <Categories title="Tendencias">
-                    <Carousel>
-                        {
-                            trends?.map(item =>
-                                <CarouselItem key={item.id} {...item} />
-                            )
-                        }
-                    </Carousel>
-                </Categories>
-            }
-            {
-                originals?.length > 0 &&
-                <Categories title="Originales de Platzi Video">
-                    <Carousel>
-                        {
-                            originals?.map(item =>
-                                <CarouselItem key={item.id} {...item} />
-                            )
-                        }
-                    </Carousel>
-                </Categories>
-            }
+            <Search onSearch={handleSearch} searchParam={searchValues.searchParam} />
+            {!searchValues.isSearching
+                ? (<>
+                    <CarouselSection
+                        dataVideos={myList}
+                        title="Mi lista"
+                        isFavorite={true}
+                    />
+                    <CarouselSection
+                        dataVideos={trends}
+                        title="Tendencias"
+                        isFavorite={false}
+                    />
+                    <CarouselSection
+                        dataVideos={originals}
+                        title="Originales de Platzi Video"
+                        isFavorite={false}
+                    />
+                </>)
+                : search.searchResults.length > 0
+                    ? <CarouselSection
+                        dataVideos={search.searchResults}
+                        title="Resultados de la busqueda"
+                        isFavorite={false}
+                    />
+                    : <SearchNoResults />}
+
         </>
     )
 }
@@ -66,10 +72,17 @@ mapDispatchToProps: es un objeto con las distintas funciones para ejecutar una a
 //Agrega la data a los props
 const mapStateToProps = state => {
     return {
-        user: state.user,
         myList: state.myList,
         trends: state.trends,
-        originals: state.originals
+        originals: state.originals,
+        search: state.search,
     }
 }
-export default connect(mapStateToProps, null)(Home)
+
+const mapDispatchToProps = {
+    setSearch,
+    cleanVideoSource,
+}
+
+//connect nos ayuda a integrar sobre las props los valores y acciones de redux
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
