@@ -20,5 +20,5 @@ export const saveState = (state) => {
 }
 
 export const clearState = () => {
-  return undefined
+  saveState(undefined)
 }
